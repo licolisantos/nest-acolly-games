@@ -4,7 +4,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)
 ![TypeORM](https://img.shields.io/badge/TypeORM-0.3-orange)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql)
-![License](https://img.shields.io/badge/License-UNLICENSED-lightgrey)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 API Backend profissional para gerenciamento de Loja de Games com autenticação pronta, DTOs, autorização por role e integração RAWG.
 
