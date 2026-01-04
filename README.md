@@ -1,98 +1,108 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Acolly Games - API Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+![NestJS](https://img.shields.io/badge/NestJS-11.0-red?logo=nestjs)
+![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript)
+![TypeORM](https://img.shields.io/badge/TypeORM-0.3-orange)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql)
+![License](https://img.shields.io/badge/License-UNLICENSED-lightgrey)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+API Backend completa para gerenciamento de uma Loja de Games com integração à API RAWG.
 
-## Description
+## 📋 Requisitos
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Node.js 18+
+- npm ou yarn
+- MySQL 8.0+
 
-## Project setup
+## 🚀 Instalação
 
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
+## ⚙️ Configuração
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=loja_games
+RAWG_API_KEY=YOUR_RAWG_API_KEY_HERE
+PORT=3000
+```
+
+Obtenha sua chave RAWG em: [https://rawg.io/apidocs](https://rawg.io/apidocs)
+
+## 🏃 Executar
 
 ```bash
-# development
-$ npm run start
+# Modo desenvolvimento
+npm run start:dev
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# Modo produção
+npm run build
+npm run start:prod
 ```
 
-## Run tests
+## 📦 Endpoints
 
-```bash
-# unit tests
-$ npm run test
+### Categoria
+- `GET /categorias` - Listar todas
+- `GET /categorias/:id` - Buscar por ID
+- `GET /categorias/nome/:nome` - Buscar por nome
+- `POST /categorias` - Criar
+- `PUT /categorias` - Atualizar
+- `DELETE /categorias/:id` - Deletar
 
-# e2e tests
-$ npm run test:e2e
+### Produto
+- `GET /produtos` - Listar todas
+- `GET /produtos/:id` - Buscar por ID
+- `GET /produtos/nome/:nome` - Buscar por nome
+- `POST /produtos` - Criar
+- `PUT /produtos` - Atualizar
+- `DELETE /produtos/:id` - Deletar
 
-# test coverage
-$ npm run test:cov
+### RAWG API
+- `GET /rawg/games?pageSize=20` - Listar jogos
+- `GET /rawg/games/search?nome=` - Buscar por nome
+- `GET /rawg/games/:id` - Buscar por ID
+
+## 🧪 Testes
+
+Importe o arquivo `Insomnia_Collection.json` no Insomnia para testar todos os endpoints.
+
+## 🏗️ Arquitetura
+
+```
+src/
+├── categoria/
+│   ├── controller/
+│   ├── services/
+│   ├── entities/
+│   └── categoria.module.ts
+├── produto/
+│   ├── controller/
+│   ├── services/
+│   ├── entities/
+│   └── produto.module.ts
+├── rawg/
+│   ├── controller/
+│   ├── services/
+│   └── rawg.module.ts
+├── app.module.ts
+└── main.ts
 ```
 
-## Deployment
+## 📝 Banco de Dados
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+**Categoria**: id, nome, descricao  
+**Produto**: id, nome, descricao, preco, estoque, categoria_id (FK)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Relacionamento: 1:N (Categoria → Produtos)
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+## 🔌 Integração RAWG
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Consome dados reais de jogos da RAWG API sem persistir automaticamente no banco local. Dados servem como referência para cadastro manual.
