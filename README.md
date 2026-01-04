@@ -1,33 +1,158 @@
 # Acolly Games - API Backend
 
 ![NestJS](https://img.shields.io/badge/NestJS-11.0-red?logo=nestjs)
-![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)
 ![TypeORM](https://img.shields.io/badge/TypeORM-0.3-orange)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql)
 ![License](https://img.shields.io/badge/License-UNLICENSED-lightgrey)
 
-API Backend completa para gerenciamento de uma Loja de Games com integração à API RAWG.
+API Backend profissional para gerenciamento de Loja de Games com autenticação pronta, DTOs, autorização por role e integração RAWG.
 
 ## 📋 Requisitos
 
 - Node.js 18+
 - npm ou yarn
 - MySQL 8.0+
+- RAWG API Key (opcional)
 
 ## 🚀 Instalação
 
 ```bash
 npm install
+npm run build
+npm run start
 ```
 
 ## ⚙️ Configuração
 
-Crie um arquivo `.env` na raiz do projeto:
+Crie um arquivo `.env` na raiz:
 
 ```env
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
+DB_PASSWORD=
+DB_NAME=loja_games
+RAWG_API_KEY=YOUR_API_KEY
+PORT=3000
+```
+
+## 📚 Recursos
+
+### ✅ Entidades
+
+- **Categoria** - Categorias de jogos
+- **Produto** - Produtos da loja
+- **Usuário** - Usuários do sistema (ADMIN / USER)
+
+### 🔌 Endpoints Públicos
+
+```
+GET    /categorias
+GET    /categorias/:id
+GET    /categorias/nome/:nome
+GET    /produtos
+GET    /produtos/:id
+GET    /produtos/nome/:nome
+GET    /rawg/games
+GET    /rawg/games/search?nome=
+GET    /rawg/games/:id
+```
+
+### 🔒 Endpoints Protegidos (ADMIN)
+
+```
+POST   /categorias
+PUT    /categorias/:id
+DELETE /categorias/:id
+POST   /produtos
+PUT    /produtos/:id
+DELETE /produtos/:id
+POST   /produtos/import/rawg
+```
+
+### 🏛️ Arquitetura
+
+```
+src/
+├── categoria/
+│   ├── controller/
+│   ├── services/
+│   ├── entities/
+│   ├── dto/
+│   └── categoria.module.ts
+├── produto/
+│   ├── controller/
+│   ├── services/
+│   ├── entities/
+│   ├── dto/
+│   └── produto.module.ts
+├── usuario/
+│   ├── entities/
+│   ├── enums/role.enum.ts
+│   └── dto/
+├── rawg/
+│   ├── controller/
+│   ├── services/
+│   └── rawg.module.ts
+├── common/
+│   ├── guards/roles.guard.ts
+│   ├── decorators/roles.decorator.ts
+│   └── dto/api-response.dto.ts
+└── app.module.ts
+```
+
+## 🎯 Novidades v2.0
+
+- ✨ DTOs completos (Create, Update, Response)
+- 🔐 Autorização por Role (ADMIN / USER)
+- 📦 Envelope padrão para respostas
+- 🎮 Importação controlada de jogos da RAWG
+- 📝 Tipagem forte com TypeScript
+- 🛡️ Validação com class-validator
+
+## 📖 Exemplos de Uso
+
+### Criar Categoria (ADMIN)
+
+```bash
+curl -X POST http://localhost:3000/categorias \
+  -H "Content-Type: application/json" \
+  -d '{"nome":"Ação","descricao":"Jogos de ação"}'
+```
+
+### Listar Produtos
+
+```bash
+curl http://localhost:3000/produtos
+```
+
+### Importar Jogo da RAWG (ADMIN)
+
+```bash
+curl -X POST http://localhost:3000/produtos/import/rawg \
+  -H "Content-Type: application/json" \
+  -d '{
+    "rawgId": 3328,
+    "preco": 79.90,
+    "estoque": 10,
+    "categoria_id": 1
+  }'
+```
+
+## 🧪 Testes
+
+Use Insomnia ou Postman. Coleção incluída em `Insomnia_Collection.json`.
+
+## 📝 Resposta Padrão
+
+```json
+{
+  "data": {...},
+  "message": "Sucesso",
+  "timestamp": "2026-01-04T15:00:00.000Z"
+}
+```
 DB_PASSWORD=
 DB_NAME=loja_games
 RAWG_API_KEY=YOUR_RAWG_API_KEY_HERE

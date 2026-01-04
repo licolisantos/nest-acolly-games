@@ -8,6 +8,7 @@ import { ProdutoModule } from './produto/produto.module';
 import { RawgModule } from './rawg/rawg.module';
 import { Categoria } from './categoria/entities/categoria.entity';
 import { Produto } from './produto/entities/produto.entity';
+import { Usuario } from './usuario/entities/usuario.entity';
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ dotenv.config();
       username: process.env.DB_USER || 'root',
       password: process.env.DB_PASSWORD || '',
       database: process.env.DB_NAME || 'loja_games',
-      entities: [Categoria, Produto],
+      entities: [Categoria, Produto, Usuario],
       synchronize: true,
       logging: false,
     }),
